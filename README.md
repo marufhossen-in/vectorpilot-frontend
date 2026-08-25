@@ -185,3 +185,4 @@ Upgrading switches the plan in place; the dashboard re-renders to the unlocked e
 ## License
 
 Frontend demo only. © 2026 VectorPilot · SAA-FE-BP-2026.
+# vectorpilot-frontend
