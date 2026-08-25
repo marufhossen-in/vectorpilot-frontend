@@ -1,0 +1,48 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "framework": "vite",
+  "rewrites": [
+    { "source": "/", "destination": "/index.html" },
+    { "source": "/features", "destination": "/index.html" },
+    { "source": "/pricing", "destination": "/index.html" },
+    { "source": "/about", "destination": "/index.html" },
+    { "source": "/help", "destination": "/index.html" },
+    { "source": "/waitlist", "destination": "/index.html" },
+    { "source": "/auth/login", "destination": "/index.html" },
+    { "source": "/auth/signup", "destination": "/index.html" },
+    { "source": "/payment", "destination": "/index.html" },
+    { "source": "/payment/success", "destination": "/index.html" },
+    { "source": "/dashboard", "destination": "/index.html" },
+    { "source": "/dashboard/usage", "destination": "/index.html" },
+    { "source": "/dashboard/keys", "destination": "/index.html" },
+    { "source": "/dashboard/sessions", "destination": "/index.html" },
+    { "source": "/dashboard/profile", "destination": "/index.html" },
+    { "source": "/dashboard/settings", "destination": "/index.html" },
+    { "source": "/dashboard/notifications", "destination": "/index.html" },
+    { "source": "/dashboard/copilot", "destination": "/index.html" },
+    { "source": "/dashboard/projects", "destination": "/index.html" },
+    { "source": "/dashboard/activity", "destination": "/index.html" },
+    { "source": "/dashboard/analytics", "destination": "/index.html" },
+    { "source": "/dashboard/integrations", "destination": "/index.html" },
+    { "source": "/dashboard/(.*)", "destination": "/index.html" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ],
+  "headers": [
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "DENY" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" }
+      ]
+    }
+  ]
+}

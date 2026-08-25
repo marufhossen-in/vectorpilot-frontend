@@ -1,0 +1,295 @@
+@import 'tailwindcss';
+
+/* ============================================================
+   VectorPilot — Design Tokens (CSS custom properties)
+   ============================================================ */
+:root,
+[data-theme='light'] {
+  --vp-primary: #4f46e5;
+  --vp-primary-deep: #4338ca;
+  --vp-primary-accent: #6366f1;
+  --vp-primary-light: #818cf8;
+  --vp-primary-700: #3730a3;
+
+  --vp-bg: #f7f7f2;
+  --vp-surface: #ffffff;
+  --vp-surface-alt: #f1f2f5;
+  --vp-elevated: #ffffff;
+
+  --vp-text-primary: #07090d;
+  --vp-text-secondary: #4b5563;
+  --vp-text-muted: #7a8493;
+  --vp-text-disabled: #a8afb9;
+
+  --vp-border: #e1e4e9;
+  --vp-border-strong: #d4d8e0;
+  --vp-border-active: #4f46e5;
+
+  --vp-selected-bg: #eef2ff;
+
+  --vp-success: #16a34a;
+  --vp-warning: #d97706;
+  --vp-danger: #dc2626;
+  --vp-info: #4f46e5;
+  --vp-processing: #6366f1;
+  --vp-offline: #737c8c;
+
+  --model-gpt-4o: #0d7cc0;
+  --model-claude: #a0700f;
+  --model-gemini: #0d8f63;
+  --model-custom: #6d4fd6;
+  --spend-ok: #0d8f63;
+  --spend-warn: #a0700f;
+  --spend-critical: #c73a59;
+  --ticker-pulse: rgba(13, 143, 99, 0.5);
+
+  --vp-ring: rgba(79, 70, 229, 0.35);
+  --vp-shadow: 0 10px 30px -12px rgba(7, 9, 13, 0.18);
+}
+
+[data-theme='dark'] {
+  --vp-primary: #6366f1;
+  --vp-primary-deep: #818cf8;
+  --vp-primary-accent: #818cf8;
+
+  --vp-bg: #07090d;
+  --vp-surface: #0c0f14;
+  --vp-surface-alt: #12161d;
+  --vp-elevated: #181d26;
+
+  --vp-text-primary: #f7f7f2;
+  --vp-text-secondary: #b8bfca;
+  --vp-text-muted: #737c8c;
+  --vp-text-disabled: #4b5563;
+
+  --vp-border: #272d38;
+  --vp-border-strong: #343b47;
+  --vp-border-active: #6366f1;
+
+  --vp-selected-bg: #1e1b4b;
+
+  --vp-success: #4fd6a0;
+  --vp-warning: #e2ae4e;
+  --vp-danger: #f0708a;
+  --vp-info: #818cf8;
+  --vp-processing: #6366f1;
+  --vp-offline: #737c8c;
+
+  --model-gpt-4o: #5ec6ff;
+  --model-claude: #e2ae4e;
+  --model-gemini: #4fd6a0;
+  --model-custom: #a78bfa;
+  --spend-ok: #4fd6a0;
+  --spend-warn: #e2ae4e;
+  --spend-critical: #f0708a;
+  --ticker-pulse: rgba(79, 214, 160, 0.5);
+
+  --vp-ring: rgba(99, 102, 241, 0.4);
+  --vp-shadow: 0 14px 40px -14px rgba(0, 0, 0, 0.7);
+}
+
+:root {
+  --vp-font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --vp-font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --radius-card: 12px;
+}
+
+/* ============================================================
+   Base
+   ============================================================ */
+@layer base {
+  * {
+    border-color: var(--vp-border);
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    margin: 0;
+    background-color: var(--vp-bg);
+    color: var(--vp-text-primary);
+    font-family: var(--vp-font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  ::selection {
+    background: var(--vp-selected-bg);
+  }
+  h1, h2, h3, h4 {
+    letter-spacing: -0.02em;
+  }
+  /* Scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--vp-border-strong);
+    border-radius: 999px;
+    border: 2px solid var(--vp-bg);
+  }
+}
+
+/* ============================================================
+   Utilities
+   ============================================================ */
+.font-mono {
+  font-family: var(--vp-font-mono);
+}
+.glass {
+  backdrop-filter: saturate(180%) blur(14px);
+  -webkit-backdrop-filter: saturate(180%) blur(14px);
+  background-color: color-mix(in srgb, var(--vp-bg) 72%, transparent);
+}
+.gradient-text {
+  background: linear-gradient(100deg, var(--vp-primary), var(--vp-primary-light));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.grid-bg {
+  background-image:
+    linear-gradient(to right, var(--vp-border) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--vp-border) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
+}
+
+/* ============================================================
+   Animations
+   ============================================================ */
+@keyframes tickerPulse {
+  from { box-shadow: 0 0 0 0 var(--ticker-pulse); }
+  to   { box-shadow: 0 0 0 11px transparent; }
+}
+.ticker-dot { background: var(--spend-ok); }
+.ticker-dot.live { animation: tickerPulse 0.8s ease-out; }
+
+@keyframes blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+.caret { display: inline-block; width: 2px; margin-left: 2px; background: var(--vp-primary); animation: blink 1s step-end infinite; }
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 32s linear infinite;
+}
+.marquee-track:hover { animation-play-state: paused; }
+
+@keyframes shimmer {
+  100% { transform: translateX(100%); }
+}
+.shimmer { position: relative; overflow: hidden; }
+.shimmer::after {
+  content: '';
+  position: absolute; inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--vp-text-primary) 6%, transparent), transparent);
+  animation: shimmer 1.4s infinite;
+}
+
+/* Page route transition */
+.route-enter { animation: routeIn 0.32s cubic-bezier(0.22, 1, 0.36, 1); }
+@keyframes routeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Breathing — subtle light/dark pulse for hero/marketing visuals */
+@keyframes breathe {
+  0%, 100% { filter: brightness(0.97) saturate(1.02); transform: scale(1.012); }
+  50%      { filter: brightness(1.1) saturate(1.16);  transform: scale(1.05); }
+}
+.breathe { animation: breathe 8s cubic-bezier(0.45, 0, 0.55, 1) infinite; will-change: transform, filter; }
+
+/* Pulsing glow halo around framed images */
+@keyframes imgGlow {
+  0%, 100% { box-shadow: 0 18px 50px -22px rgba(0, 0, 0, 0.45), 0 0 22px -8px color-mix(in srgb, var(--vp-primary) 18%, transparent); }
+  50%      { box-shadow: 0 18px 50px -22px rgba(0, 0, 0, 0.45), 0 0 50px -6px color-mix(in srgb, var(--vp-primary) 48%, transparent); }
+}
+.img-glow { animation: imgGlow 6.5s ease-in-out infinite; }
+
+/* Slow float for overlay cards */
+@keyframes floaty {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-9px); }
+}
+.float-slow { animation: floaty 6s ease-in-out infinite; }
+
+/* Aurora mesh glow background */
+.mesh-glow {
+  background:
+    radial-gradient(38% 50% at 14% 16%, color-mix(in srgb, var(--vp-primary) 26%, transparent), transparent 68%),
+    radial-gradient(44% 54% at 86% 12%, color-mix(in srgb, var(--vp-primary-light) 22%, transparent), transparent 68%),
+    radial-gradient(60% 60% at 50% 110%, color-mix(in srgb, var(--vp-primary-700) 20%, transparent), transparent 70%),
+    radial-gradient(36% 46% at 92% 86%, color-mix(in srgb, var(--vp-info) 16%, transparent), transparent 66%);
+}
+[data-theme='light'] .mesh-glow {
+  background:
+    radial-gradient(40% 52% at 14% 14%, rgba(99, 102, 241, 0.30), transparent 66%),
+    radial-gradient(46% 56% at 86% 10%, rgba(129, 140, 248, 0.26), transparent 66%),
+    radial-gradient(62% 62% at 50% 112%, rgba(67, 56, 202, 0.22), transparent 68%),
+    radial-gradient(38% 48% at 92% 84%, rgba(14, 165, 233, 0.18), transparent 64%);
+}
+[data-theme='dark'] .mesh-glow {
+  background:
+    radial-gradient(40% 52% at 14% 16%, rgba(99, 102, 241, 0.34), transparent 64%),
+    radial-gradient(46% 56% at 86% 12%, rgba(129, 140, 248, 0.24), transparent 64%),
+    radial-gradient(62% 62% at 50% 112%, rgba(55, 48, 163, 0.30), transparent 68%),
+    radial-gradient(38% 48% at 92% 86%, rgba(56, 189, 248, 0.16), transparent 64%);
+}
+/* Aurora — the most premium, luminous layered gradient */
+.aurora {
+  background:
+    radial-gradient(55% 70% at 16% 6%, rgba(99, 102, 241, 0.34), transparent 60%),
+    radial-gradient(52% 66% at 86% 12%, rgba(129, 140, 248, 0.28), transparent 60%),
+    radial-gradient(82% 92% at 50% 118%, rgba(67, 56, 202, 0.24), transparent 64%),
+    radial-gradient(42% 54% at 92% 86%, rgba(14, 165, 233, 0.18), transparent 60%);
+}
+[data-theme='dark'] .aurora {
+  background:
+    radial-gradient(55% 70% at 16% 8%, rgba(99, 102, 241, 0.36), transparent 60%),
+    radial-gradient(52% 66% at 86% 14%, rgba(129, 140, 248, 0.26), transparent 60%),
+    radial-gradient(82% 92% at 50% 118%, rgba(55, 48, 163, 0.34), transparent 64%),
+    radial-gradient(42% 54% at 92% 86%, rgba(56, 189, 248, 0.18), transparent 60%);
+}
+
+/* Highlighter-style emphasis for key phrases */
+.hl {
+  background-image: linear-gradient(120deg, color-mix(in srgb, var(--vp-primary) 26%, transparent), color-mix(in srgb, var(--vp-primary-light) 26%, transparent));
+  background-repeat: no-repeat;
+  background-size: 100% 36%;
+  background-position: 0 90%;
+  padding: 0 0.12em;
+  font-weight: 600;
+}
+.hl-strong { color: var(--vp-primary); font-weight: 700; }
+
+/* Glass stat card */
+.glass-card {
+  background: color-mix(in srgb, var(--vp-surface) 78%, transparent);
+  backdrop-filter: blur(10px) saturate(150%);
+  -webkit-backdrop-filter: blur(10px) saturate(150%);
+}
+
+/* Reveal blur-in helper (driven by GSAP) */
+.reveal-blur { will-change: transform, opacity, filter; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
